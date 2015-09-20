@@ -22,10 +22,11 @@ def checkBounds(point):
 		return False
 	return True
 
+start = np.array([int(leds/2.0),int(tapes/2.0)])
 head = np.array([int(leds/2.0),int(tapes/2.0)])
 #the snake is an array of points, 
 #with the head listed first:
-snake = [head,head+move['left'],head+2*move['left']]
+snake = [start,start+move['left'],start+2*move['left']]
 #current direction of the snake
 direc = 'right'
 
@@ -35,13 +36,16 @@ for point in snake:
 plt.imshow(board, cmap = cm.Greys_r, interpolation="none")
 plt.ion()
 plt.show()
+print snake
 for i in range(2):
+	time.sleep(0.5)
 	head += move[direc]
-	print head
+	snake = [np.array([head[0],head[1]])]+snake[:-1]
+	print snake
 	board = np.zeros((7,25))
 	for point in snake:
 		board[point[1],point[0]] = 1
 	plt.imshow(board, cmap = cm.Greys_r, interpolation="none")
 	plt.draw()
-	time.sleep(0.5)
+time.sleep(0.5)
 
